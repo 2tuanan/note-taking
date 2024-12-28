@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     return (
         <div className='min-w-screen min-h-screen bg-gray-200 flex flex-col justify-center items-center'>
             <div className='flex-col justify-center items-center'>
                 <div className='mb-10 p-4'>
-                    <h2 className='text-center'>Create an account</h2>
+                    <h2 className='text-center text-yellow-500'>Create an account</h2>
                 </div>
                 <div className='bg-slate-500 p-10 rounded-md text-white justify-between items-center'>
                     <h2 className='text-center mb-8'>Sign Up</h2>
@@ -16,7 +17,7 @@ const Register = () => {
                                 <path d="M8.96924 6.80551L7.27808 7.59476C7.19189 7.63479 7.09586 7.65622 7.00049 7.65622C6.90511 7.65622 6.80908 7.63479 6.72268 7.59476L2.40674 5.58051V9.18747C2.40674 10.414 4.42449 11.375 7.00049 11.375C7.71011 11.375 8.37489 11.2999 8.96924 11.1685V6.80551Z" fill="#ADB5BD"/>
                                 <path d="M10.2817 6.19304V10.7317C11.0968 10.3388 11.5942 9.79607 11.5942 9.18751V5.58032L10.2817 6.19304Z" fill="#ADB5BD"/>
                             </svg>
-                            <input className='px-3 py-2 outline-none border border-slate-800 bg-transparent rounded-md focus:bg-transparent' 
+                            <input className='px-3 py-2 outline-none border border-slate-800 bg-transparent rounded-md' 
                             type="text" name='name' placeholder='Name' id='name' required/>
                         </div>
                         <div className='flex flex-row w-full gap-4 justify-center items-center mb-3'>
@@ -27,7 +28,7 @@ const Register = () => {
                             <input className='px-3 py-2 outline-none border border-slate-800 bg-transparent rounded-md focus:bg-transparent' 
                             type="text" name='email' placeholder='Email' id='email' required/>
                         </div>
-                        <div className='flex flex-row w-full gap-4 justify-center items-center mb-3'>
+                        <div className='flex flex-row w-full gap-4 justify-center items-center mb-6'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 10 14" fill="none">
                                 <path d="M5 5.03131C2.58369 5.03131 0.625 6.99 0.625 9.40631C0.625 11.8226 2.58369 13.7813 5 13.7813C7.41631 13.7813 9.375 11.8226 9.375 9.40631C9.375 6.99 7.41631 5.03131 5 5.03131ZM5.21875 10.0429V11.3751H4.78125V10.0429C4.16066 9.93853 3.6875 9.40019 3.6875 8.75006C3.6875 8.02512 4.27506 7.43756 5 7.43756C5.72494 7.43756 6.3125 8.02512 6.3125 8.75006C6.3125 9.40019 5.83934 9.93853 5.21875 10.0429Z" fill="#ADB5BD"/>
                                 <path d="M2.59424 5.24125V3.0625C2.59424 1.73578 3.67377 0.65625 5.00049 0.65625C6.32721 0.65625 7.40674 1.73578 7.40674 3.0625H7.84424C7.84424 1.4945 6.56849 0.21875 5.00049 0.21875C3.43249 0.21875 2.15674 1.4945 2.15674 3.0625V5.52694C2.29696 5.42391 2.44308 5.32875 2.59424 5.24125Z" fill="#ADB5BD"/>
@@ -44,7 +45,7 @@ const Register = () => {
                     <button className='flex items-center m-auto bg-yellow-400 rounded-md py-2 px-3 hover:shadow-md hover:shadow-yellow-200 transform duration-500'>Create account</button>
                 </div>
                 <div className='flex justify-end items-center mt-2'>
-                    <p>Already have an account</p>
+                    <p>Already have an account ? <Link to="/login">Sign In</Link></p>
                 </div>
             </div>
         </div>
