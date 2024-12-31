@@ -1,7 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import api from '../../api/api';
 
-export const login = createAsyncThunk(
-    '/login',
+export const user_login = createAsyncThunk(
+    'auth/user_login',
+    async(info) => {
+        // console.log(info)
+        try {
+            const {data} = await api.post('/user-login', info, {withCredentials: true})
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 )
 
 export const authReducer = createSlice({
@@ -13,7 +23,7 @@ export const authReducer = createSlice({
         userInfo: ''
     },
     reducers: {
-
+        
     },
     extraReducers: () => {
 
