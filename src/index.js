@@ -16,7 +16,7 @@ root.render(
         <App /> 
         <Toaster 
           toastOptions={{
-            duration: 5000,
+            duration: 1000,
             position: 'top-center',
             style: {
               padding: '16px',

@@ -3,13 +3,15 @@ import api from '../../api/api';
 
 export const user_login = createAsyncThunk(
     'auth/user_login',
-    async(info) => {
-        // console.log(info)
+    async(info, {rejectWithValue, fulfillWithValue}) => {
+        console.log(info)
         try {
             const {data} = await api.post('/user-login', info, {withCredentials: true})
-            console.log(data);
+            // console.log(data);
+            return fulfillWithValue(data);
         } catch (error) {
-            console.log(error);
+            // console.log(error.response.data);
+            return rejectWithValue(error.response.data);
         }
     }
 )
@@ -23,11 +25,26 @@ export const authReducer = createSlice({
         userInfo: ''
     },
     reducers: {
-        
+        messageClear: (state, _) => {
+            state.errorMessage = '';
+            state.successMessage = '';
+        }
     },
-    extraReducers: () => {
-
+    extraReducers: (builder) => {
+        builder
+        .addCase(user_login.pending, (state, {payload}) => {
+            state.loader = true;
+        })
+        .addCase(user_login.rejected, (state, {payload}) => {
+            state.loader = false;
+            state.errorMessage = payload.error;
+        })
+        .addCase(user_login.fulfilled, (state, {payload}) => {
+            state.loader = false;
+            state.successMessage = payload.message;
+        })
     }
 })
 
+export const {messageClear} = authReducer.actions;
 export default authReducer.reducer;
