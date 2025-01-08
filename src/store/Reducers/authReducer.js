@@ -7,6 +7,7 @@ export const user_login = createAsyncThunk(
         console.log(info)
         try {
             const {data} = await api.post('/user-login', info, {withCredentials: true})
+            localStorage.setItem('accessToken', data.token)
             // console.log(data);
             return fulfillWithValue(data);
         } catch (error) {
