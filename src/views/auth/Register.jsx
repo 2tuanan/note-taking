@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { user_register, messageClear } from '../../store/Reducers/authReducer';
+import { BeatLoader } from 'react-spinners';
+import toast from 'react-hot-toast';
 
 const Register = () => {
+    const dispatch = useDispatch()
+    const {loader, errorMessage, successMessage} = useSelector(state => state.auth)
     const [state, setState] = useState({
         name: '',
         email: '',
@@ -16,7 +22,26 @@ const Register = () => {
     }
     const submitHandler = (e) => {
         e.preventDefault()
-        console.log(state)
+        dispatch(user_register(state))
+    }
+
+    useEffect(() => {
+        if (errorMessage){
+            toast.error(errorMessage)
+            dispatch(messageClear())
+        }
+        if (successMessage){
+            toast.success(successMessage)
+            dispatch(messageClear())
+        }
+    }, [errorMessage, successMessage])
+
+    const overrideStyle = {
+        display: 'flex',
+        margin: '0 auto',
+        height: '24px',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
     return (
         <div className='min-w-screen min-h-screen bg-gray-200 flex flex-col justify-center items-center'>
@@ -57,7 +82,11 @@ const Register = () => {
                             type="checkbox" name='checkbox' id='checkbox'/>
                             <label htmlFor="checkbox">I agree with Privacy Policy</label>
                         </div>
-                        <button className='flex items-center m-auto bg-yellow-400 rounded-md py-2 px-3 hover:shadow-md hover:shadow-yellow-200 transform duration-500'>Create account</button>
+                        <button disabled={loader ? true : false} className='flex items-center m-auto bg-yellow-400 rounded-md py-2 px-3 hover:shadow-md hover:shadow-yellow-200 transform duration-500'>
+                            {
+                                loader ? <BeatLoader cssOverride={overrideStyle} color='white'/> : 'Create Account'
+                            }
+                        </button>
                     </form>
                 </div>
                 <div className='flex justify-end items-center mt-2'>
