@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { user_register, messageClear } from '../../store/Reducers/authReducer';
 import { BeatLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 
 const Register = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const {loader, errorMessage, successMessage} = useSelector(state => state.auth)
     const [state, setState] = useState({
@@ -33,6 +34,7 @@ const Register = () => {
         if (successMessage){
             toast.success(successMessage)
             dispatch(messageClear())
+            navigate('/')
         }
     }, [errorMessage, successMessage])
 
