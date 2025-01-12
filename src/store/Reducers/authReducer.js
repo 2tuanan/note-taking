@@ -2,6 +2,19 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import api from '../../api/api';
 import  { jwtDecode } from 'jwt-decode';
 
+export const admin_login = createAsyncThunk(
+    'auth/admin_login',
+    async(info, {rejectWithValue, fulfillWithValue}) => {
+        try {
+            const {data} = await api.post('/admin-login', info, {withCredentials: true})
+            localStorage.setItem('accessToken', data.token)
+            return fulfillWithValue(data);
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+)
+
 export const user_login = createAsyncThunk(
     'auth/user_login',
     async(info, {rejectWithValue, fulfillWithValue}) => {
@@ -78,6 +91,19 @@ export const authReducer = createSlice({
     },
     extraReducers: (builder) => {
         builder
+        .addCase(admin_login.pending, (state, {payload}) => {
+            state.loader = true;
+        })
+        .addCase(admin_login.rejected, (state, {payload}) => {
+            state.loader = false;
+            state.errorMessage = payload.error;
+        })
+        .addCase(admin_login.fulfilled, (state, {payload}) => {
+            state.loader = false;
+            state.successMessage = payload.message;
+            state.token = payload.token
+            state.role = returnRole(payload.token)
+        })
         .addCase(user_login.pending, (state, {payload}) => {
             state.loader = true;
         })
