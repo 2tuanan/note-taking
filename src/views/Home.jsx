@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import MainPage from './MainPage';
+import MainPage from './components/MainPage';
 
 const Home = () => {
     const {role} = useSelector(state => state.auth)
