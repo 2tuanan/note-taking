@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import CreateArea from './CreateArea';
-import Note from './Note';
+import CreateArea from '../components/CreateArea';
+import Note from '../components/Note';
 
 const MainPage = () => {
     const [notes, setNotes] = useState([]);
