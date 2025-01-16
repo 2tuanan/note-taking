@@ -4,7 +4,6 @@ import ProtectRoute from './ProtectRoute.jsx';
 
 export const getRoutes = () => {
     privateRoutes.map(r => {
-        console.log(r)
         r.element = <ProtectRoute route={r}>{r.element}</ProtectRoute>
     })
     return {
