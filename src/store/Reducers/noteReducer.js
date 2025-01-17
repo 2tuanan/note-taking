@@ -6,7 +6,18 @@ export const add_note = createAsyncThunk(
     async(note, {rejectWithValue, fulfillWithValue}) => {
         try {
             const {data} = await api.post('/add-note', note, {withCredentials: true})
-            
+            return fulfillWithValue(data);
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+)
+
+export const get_notes = createAsyncThunk(
+    'note/get_notes',
+    async(_, {rejectWithValue, fulfillWithValue}) => {
+        try {
+            const {data} = await api.get('/get-notes', {withCredentials: true})
             return fulfillWithValue(data);
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -41,6 +52,10 @@ export const noteReducer = createSlice({
         .addCase(add_note.rejected, (state, { payload }) => {
             state.loader = false;
             state.errorMessage = payload.error;
+        })
+        .addCase(get_notes.fulfilled, (state, { payload }) => {
+            state.notes = payload.notes;
+            state.totalNotes = payload.totalNotes;
         })
     }
 })

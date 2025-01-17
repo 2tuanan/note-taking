@@ -1,30 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CreateArea from '../components/CreateArea';
 import Note from '../components/Note';
+import { useDispatch, useSelector } from 'react-redux';
+import { get_notes } from '../../store/Reducers/noteReducer';
 
 const MainPage = () => {
-    const [notes, setNotes] = useState([]);
-    const addNote = (note) => {
-        setNotes(prevValue => {
-            return [...prevValue, note];
-        });
-        console.log(note);
-    }
+    const dispatch = useDispatch();
+    const { notes } = useSelector(state => state.note);
+    // const [notes, setNotes] = useState([]);
+    useEffect(() => {
+        console.log(notes);
+        dispatch(get_notes())
+    }, [dispatch])
     const deleteNote = (id) => {
-        setNotes(prevValue => {
-            return prevValue.filter((note, index) => {
-                return index !== id;
-            })
-        })
+        console.log('delete note', id);
     }
     return (
         <div>
-            <CreateArea onAdd={addNote}/>
-            {notes.map((note, index) => {
+            <CreateArea />
+            {notes.map((note) => {
                 return (
                 <Note
-                    id={index}
-                    key={index}
+                    id={note._id}
+                    key={note._id}
                     title={note.title}
                     content={note.content}
                     onDelete={deleteNote}

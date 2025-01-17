@@ -4,7 +4,7 @@ import { add_note, messageClear } from '../../store/Reducers/noteReducer';
 import { BeatLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 
-const CreateArea = (props) => {
+const CreateArea = () => {
     const dispatch = useDispatch()
     const {loader, errorMessage, successMessage} = useSelector(state => state.note)
     const [isExpanded, setIsExpanded] = useState(false)
