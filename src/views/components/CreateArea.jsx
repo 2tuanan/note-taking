@@ -1,53 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { add_note, messageClear } from '../../store/Reducers/noteReducer';
+import React from 'react';
 import { BeatLoader } from 'react-spinners';
-import toast from 'react-hot-toast';
 
-const CreateArea = () => {
-    const dispatch = useDispatch()
-    const {loader, errorMessage, successMessage} = useSelector(state => state.note)
-    const [isExpanded, setIsExpanded] = useState(false)
-    
-    const [input, setInput] = useState({
-        title: '',
-        content: ''
-    })
-    const expand = () => {
-        setIsExpanded(true)
-    }
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setInput((prevInput) => {
-            return {
-                ...prevInput,
-                [name]: value
-            }
-        })
-    }
-    const submitHandler = (e) => {
-        e.preventDefault()
-        const payload = {
-            title: input.title,
-            content: input.content
-        }
-        dispatch(add_note(payload))
-    }
-
-    useEffect(() => {
-        if (successMessage) {
-            toast.success(successMessage)
-            dispatch(messageClear())
-            setInput({
-                title: '',
-                content: ''
-            })
-        }
-        if (errorMessage) {
-            toast.error(errorMessage)
-            dispatch(messageClear())
-        }
-    }, [successMessage, errorMessage])
+const CreateArea = ({ input, handleChange, submitHandler, isExpanded, setIsExpanded, loader }) => {
+    const expand = () => setIsExpanded(true);
 
     const overrideStyle = {
         display: 'flex',

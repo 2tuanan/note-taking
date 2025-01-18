@@ -25,6 +25,18 @@ export const get_notes = createAsyncThunk(
     }
 )
 
+export const delete_note = createAsyncThunk(
+    'note/delete_note',
+    async(id, {rejectWithValue, }) => {
+        try {
+            const response = await api.delete(`/delete-note/${id}`, {withCredentials: true})
+            return {message: response.data.message, id};
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+)
+
 export const noteReducer = createSlice({
     name: 'note',
     initialState: {
@@ -56,6 +68,13 @@ export const noteReducer = createSlice({
         .addCase(get_notes.fulfilled, (state, { payload }) => {
             state.notes = payload.notes;
             state.totalNotes = payload.totalNotes;
+        })
+        .addCase(delete_note.rejected, (state, { payload }) => {
+            state.errorMessage = payload.error;
+        })
+        .addCase(delete_note.fulfilled, (state, { payload }) => {
+            state.notes = state.notes.filter(note => note._id !== payload.id);
+            state.successMessage = payload.message;
         })
     }
 })
