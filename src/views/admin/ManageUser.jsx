@@ -1,12 +1,14 @@
-import React from 'react';
-
-const users = [
-    {_id: 0, name: 'Jane Doe', email: 'jane@gmail.com', notesTotal: 5},
-    {_id: 1, name: 'John Smith', email: 'john@gmail.com', notesTotal: 10},
-    {_id: 2, name: 'Doo Doe', email: 'doo@gmail.com', notesTotal: 2},
-]
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { get_users } from '../../store/Reducers/adminReducer';
 
 const ManageUser = () => {
+    const dispatch = useDispatch();
+    const {users} = useSelector(state => state.admin)
+
+    useEffect(() => {
+        dispatch(get_users())
+    }, [dispatch])
     return (
         <div className='px-4 mt-8 font-montserrat'>
             <h1 className='text-2xl font-bold mb-4 text-center'>Management</h1>
@@ -16,7 +18,7 @@ const ManageUser = () => {
                         <div key={user._id} className='bg-[#f9f9f9] p-3 mb-5 rounded-lg shadow-sm'>
                             <h2 className='text-lg font-semibold mb-1'>{user.name}</h2>
                             <p className='text-sm mb-1'>Email: {user.email}</p>
-                            <p className='text-sm mb-3'>Total Notes: <span className='font-medium'>{user.notesTotal || 0}</span></p>
+                            <p className='text-sm mb-3'>Total Notes: <span className='font-medium'>{user.noteTotal || 0}</span></p>
                             <div className='flex gap-3'>
                                 <button className='w-28 bg-[#f5ba13] text-white py-2 rounded-md shadow-md text-sm 
                                     hover:transform hover:scale-105 transition-all duration-500'>

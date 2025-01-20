@@ -17,13 +17,11 @@ export const adminReducer = createSlice({
     name: 'admin',
     initialState: {
         users: [],
-        totalUsers: 0
     },
     extraReducers: (builder) => {
         builder
         .addCase(get_users.fulfilled, (state, { payload }) => {
             state.users = payload.users;
-            state.totalUsers = payload.totalUsers;
         })
     }
 })
