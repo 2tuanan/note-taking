@@ -1,14 +1,41 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { get_users } from '../../store/Reducers/adminReducer';
+import { get_users, reset_notes, messageClear } from '../../store/Reducers/adminReducer';
+import toast from 'react-hot-toast';
+import { BeatLoader } from 'react-spinners';
 
 const ManageUser = () => {
     const dispatch = useDispatch();
-    const {users} = useSelector(state => state.admin)
+    const {users, loader, successMessage, errorMessage } = useSelector(state => state.admin)
+
+    const resetNotes = (id) => {
+        if (window.confirm('Are you sure you want to reset notes?'))
+        dispatch(reset_notes(id))
+    }
 
     useEffect(() => {
         dispatch(get_users())
     }, [dispatch])
+
+    useEffect(() => {
+        if (successMessage) {
+            toast.success(successMessage);
+            dispatch(messageClear());
+        }
+        if (errorMessage) {
+            toast.error(errorMessage);
+            dispatch(messageClear());
+        }
+    }, [successMessage, errorMessage, dispatch])
+
+    const overrideStyle = {
+        display: 'flex',
+        margin: '0 auto',
+        height: 'auto',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+
     return (
         <div className='px-4 mt-8 font-montserrat'>
             <h1 className='text-2xl font-bold mb-4 text-center'>Management</h1>
@@ -20,9 +47,13 @@ const ManageUser = () => {
                             <p className='text-sm mb-1'>Email: {user.email}</p>
                             <p className='text-sm mb-3'>Total Notes: <span className='font-medium'>{user.noteTotal || 0}</span></p>
                             <div className='flex gap-3'>
-                                <button className='w-28 bg-[#f5ba13] text-white py-2 rounded-md shadow-md text-sm 
+                                <button onClick={()=>resetNotes(user._id)} className='w-28 bg-[#f5ba13] text-white py-2 rounded-md shadow-md text-sm 
                                     hover:transform hover:scale-105 transition-all duration-500'>
-                                    Reset Notes
+                                    {loader === user._id ?(
+                                        <BeatLoader cssOverride={overrideStyle} size={10} color='white'/>
+                                    ) : (
+                                        'Reset Notes'
+                                    )}
                                 </button>
                                 <button className='w-28 bg-red-500 text-white py-2 rounded-md shadow-md text-sm 
                                     hover:transform hover:scale-105 transition-all duration-500'>
