@@ -25,6 +25,20 @@ export const reset_notes = createAsyncThunk(
         }
     }
 )
+// End method
+
+export const delete_user = createAsyncThunk(
+    'admin/delete_user',
+    async(id, {rejectWithValue}) => {
+        try {
+            const {data} = await api.delete(`/delete-user/${id}`, {withCredentials: true})
+            return { message: data.message, id };
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+)
+// End method
 
 export const adminReducer = createSlice({
     name: 'admin',
@@ -32,7 +46,8 @@ export const adminReducer = createSlice({
         users: [],
         successMessage: '',
         errorMessage: '',
-        loader: null
+        resetLoader: null,
+        deleteLoader: null
     },
     reducers: {
         messageClear: (state, _) => {
@@ -46,10 +61,10 @@ export const adminReducer = createSlice({
             state.users = payload.users;
         })
         .addCase(reset_notes.pending, (state, { meta }) => {
-            state.loader = meta.arg;
+            state.resetLoader = meta.arg;
         })
         .addCase(reset_notes.fulfilled, (state, { payload }) => {
-            state.loader = null;
+            state.resetLoader = null;
             state.successMessage = payload.message;
             const userIndex = state.users.findIndex((user) => user._id === payload.id);
             if (userIndex !== -1) {
@@ -57,7 +72,19 @@ export const adminReducer = createSlice({
             }
         })
         .addCase(reset_notes.rejected, (state, { payload }) => {
-            state.loader = null;
+            state.resetLoader = null;
+            state.errorMessage = payload.error;
+        })
+        .addCase(delete_user.pending, (state, { meta }) => {
+            state.deleteLoader = meta.arg;
+        })
+        .addCase(delete_user.fulfilled, (state, { payload }) => {
+            state.deleteLoader = null;
+            state.successMessage = payload.message;
+            state.users = state.users.filter((user) => user._id !== payload.id);
+        })
+        .addCase(delete_user.rejected, (state, { payload }) => {
+            state.deleteLoader = null;
             state.errorMessage = payload.error;
         })
     }

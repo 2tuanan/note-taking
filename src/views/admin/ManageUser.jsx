@@ -1,16 +1,21 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { get_users, reset_notes, messageClear } from '../../store/Reducers/adminReducer';
+import { get_users, reset_notes, messageClear, delete_user } from '../../store/Reducers/adminReducer';
 import toast from 'react-hot-toast';
 import { BeatLoader } from 'react-spinners';
 
 const ManageUser = () => {
     const dispatch = useDispatch();
-    const {users, loader, successMessage, errorMessage } = useSelector(state => state.admin)
+    const {users, resetLoader, deleteLoader, successMessage, errorMessage } = useSelector(state => state.admin)
 
     const resetNotes = (id) => {
         if (window.confirm('Are you sure you want to reset notes?'))
         dispatch(reset_notes(id))
+    }
+
+    const deleteUser = (id) => {
+        if (window.confirm('Are you sure you want to delete user?'))
+        dispatch(delete_user(id))
     }
 
     useEffect(() => {
@@ -49,15 +54,19 @@ const ManageUser = () => {
                             <div className='flex gap-3'>
                                 <button onClick={()=>resetNotes(user._id)} className='w-28 bg-[#f5ba13] text-white py-2 rounded-md shadow-md text-sm 
                                     hover:transform hover:scale-105 transition-all duration-500'>
-                                    {loader === user._id ?(
+                                    {resetLoader === user._id ?(
                                         <BeatLoader cssOverride={overrideStyle} size={10} color='white'/>
                                     ) : (
                                         'Reset Notes'
                                     )}
                                 </button>
-                                <button className='w-28 bg-red-500 text-white py-2 rounded-md shadow-md text-sm 
+                                <button onClick={()=>deleteUser(user._id)} className='w-28 bg-red-500 text-white py-2 rounded-md shadow-md text-sm 
                                     hover:transform hover:scale-105 transition-all duration-500'>
-                                    Delete User
+                                    {deleteLoader === user._id ?(
+                                        <BeatLoader cssOverride={overrideStyle} size={10} color='white'/>
+                                    ) : (
+                                        'Delete User'
+                                    )}
                                 </button>
                             </div>
                         </div>
