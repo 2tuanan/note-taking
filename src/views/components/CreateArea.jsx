@@ -7,7 +7,7 @@ const CreateArea = ({ input, handleChange, submitHandler, isExpanded, setIsExpan
     const overrideStyle = {
         display: 'flex',
         margin: '0 auto',
-        height: '24px',
+        height: 'auto',
         justifyContent: 'center',
         alignItems: 'center',
     }
@@ -27,7 +27,7 @@ const CreateArea = ({ input, handleChange, submitHandler, isExpanded, setIsExpan
                     hover:transform hover:scale-105 transition-all duration-500' 
                     >
                         {
-                            loader ? <BeatLoader cssOverride={overrideStyle} color='white'/> : 'Add'
+                            loader ? <BeatLoader cssOverride={overrideStyle} size={7} color='white'/> : 'Add'
                         }
                     </button>
                 }
