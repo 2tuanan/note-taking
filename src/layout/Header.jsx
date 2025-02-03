@@ -4,6 +4,7 @@ import { logout } from '../store/Reducers/authReducer';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const port = process.env.REACT_APP_PORT
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dispatch = useDispatch()
     const { userInfo, role } = useSelector(state => state.auth)
@@ -17,7 +18,7 @@ const Header = () => {
                         <h2 className='text-md font-bold'>{userInfo.name}</h2>
                         <span className='text-[14px] w-full font-normal'>{userInfo?.role?.charAt(0).toUpperCase() + userInfo?.role?.slice(1)}</span>
                     </div>
-                    <img onClick={()=>setIsDropdownOpen(!isDropdownOpen)} className='w-[60px] h-[60px] bg-slate-700 rounded-full overflow-hidden cursor-pointer' src="http://localhost:3000/images/admin.png" alt="" />
+                    <img onClick={()=>setIsDropdownOpen(!isDropdownOpen)} className='w-[60px] h-[60px] bg-slate-700 rounded-full overflow-hidden cursor-pointer' src={`http://localhost:${port}/images/admin.png`} alt="" />
                     {isDropdownOpen && (
                         <div className='group absolute top-[97px] right-0 bg-white shadow-md rounded-lg w-48 border border-[#f5ba13] hover:border-red-400/80 hover:bg-red-400 transition-all duration-300'>
                             <button onClick={()=> dispatch(logout({navigate, role}))}

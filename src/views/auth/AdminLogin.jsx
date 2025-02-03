@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 const AdminLogin = () => {
+    const port = process.env.REACT_APP_PORT
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {loader, errorMessage, successMessage} = useSelector(state => state.auth)
@@ -51,7 +52,7 @@ const AdminLogin = () => {
             <div className='flex-col justify-center items-center'>
                 <div className='w-full max-w-sm bg-white p-6 rounded-lg shadow-lg'>
                     <div className='flex-col justify-center items-center'>
-                        <img className='m-auto w-52' src="http://localhost:3000/logo512.png" alt="" />
+                        <img className='m-auto w-52' src={`http://localhost:${port}/logo512.png`} alt="" />
                         <h3 className='flex items-center justify-center text-center text-2xl font-medium text-yellow-500 mb-10'>Noteshelf</h3>
                     </div>
                     <form onSubmit={submitHandler}>
