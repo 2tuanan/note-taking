@@ -18,7 +18,6 @@ export const admin_login = createAsyncThunk(
 export const user_login = createAsyncThunk(
     'auth/user_login',
     async(info, {rejectWithValue, fulfillWithValue}) => {
-        console.log(info)
         try {
             const {data} = await api.post('/user-login', info, {withCredentials: true})
             localStorage.setItem('accessToken', data.token)
@@ -47,7 +46,6 @@ export const user_register = createAsyncThunk(
     'auth/user_register',
     async(info, {rejectWithValue, fulfillWithValue}) => {
         try {
-            console.log(info);
             const {data} = await api.post('/user-register', info, {withCredentials: true})
             localStorage.setItem('accessToken', data.token)
             // console.log(data);
