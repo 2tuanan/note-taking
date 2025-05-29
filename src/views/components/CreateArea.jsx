@@ -13,7 +13,7 @@ const CreateArea = ({ input, handleChange, submitHandler, isExpanded, setIsExpan
     }
     return (
         <div className='font-montserrat px-4'>
-            <form onSubmit={submitHandler} action="" className='relative w-[480px] mt-8 mb-5 mx-auto bg-[#fff] p-4 box-border border rounded-lg shadow-md'>
+            <form onSubmit={submitHandler} action="" className='relative w-full sm:w-[480px] mt-8 mb-7 sm:mb-5 mx-auto bg-[#fff] p-4 box-border border rounded-lg shadow-md'>
                 {
                     isExpanded && <input className='w-full border-none p-1 outline-none text-lg resize-none' 
                     onChange={handleChange} name='title' value={input.title} placeholder='Title' type="text" />
